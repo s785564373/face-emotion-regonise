@@ -1,11 +1,11 @@
-from PrepareDataset import *
+from src.PrepareDataset import *
 import os
-
+import cv2
 
 def add_face():
     cam = cv2.VideoCapture(0)
 
-    folder = "people/" + input('Person:').lower()
+    folder = "../people/" + input('Person:').lower()
     try:
         os.mkdir(folder)
 
