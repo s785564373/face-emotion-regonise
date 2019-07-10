@@ -1,6 +1,6 @@
 import numpy as np
-from PrepareDataset import *
-import AddNewFace
+from src.PrepareDataset import *
+from src.AddNewFace import *
 import cv2
 import os
 import random
@@ -14,7 +14,7 @@ counter = 0
 
 choice = input("Do you want to add new face? (Yes or No) ")
 if choice == 'yes' or choice == 'Yes' or choice == 'Y' or choice == 'y':
-    AddNewFace.add_face()
+    add_face()
 else:
     print('No Add!')
 
@@ -23,13 +23,13 @@ def collect_dataset():
      @brief 提去相片信息，并贴上标签
     :return:
     '''
-    people = [person for person in os.listdir("people/")]
+    people = [person for person in os.listdir("../people/")]
     counter = 0
     for i, person in enumerate(people):
         labels_dic[i] = person
-        for image in os.listdir("people/" + person):
+        for image in os.listdir("../people/" + person):
             if image.endswith('.jpg'):
-                images.append(cv2.imread("people/" + person + '/' + image, 0))
+                images.append(cv2.imread("../people/" + person + '/' + image, 0))
                 labels.append(i)
         counter += 1
     return images, np.array(labels), labels_dic, counter
@@ -90,7 +90,7 @@ model.summary()
 model.compile(optimizer='sgd', loss='mean_squared_error', metrics=['accuracy'])
 # model.fit(X_train, Y_train, epochs=1, batch_size=50)
 history = model.fit(X_train, Y_train, validation_split=0.25, epochs=300, batch_size=32, verbose=1)
-filepath = 'model/cnnmodel.h5'
+filepath = '../model/cnnmodel.h5'
 
 print('Testing......')
 loss, accuracy = model.evaluate(X_test, Y_test)
